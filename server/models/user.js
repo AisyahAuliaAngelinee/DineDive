@@ -1,4 +1,5 @@
 "use strict";
+const { hashPassword } = require("../helpers/bcrypt");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
@@ -46,5 +47,17 @@ module.exports = (sequelize, DataTypes) => {
 			modelName: "User",
 		}
 	);
+
+	//? Create customHooks for Hash Password
+	//? Custom Hooks should put above model return
+	/** Conditions terms:
+	 * Create the random hash in with bcryptjs package (npm i bcryptjs)
+	 * import the random hash
+	 * password will be hash in customhooks before create the user account
+	 */
+	User.beforeCreate((data) => {
+		data.password = hashPassword(data.password);
+	});
+
 	return User;
 };
