@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+const cors = require("cors");
 
 // ?needed when trying port connection for the first time
 // app.get("/", (req, res) => {
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3000;
 // });
 
 // ?running the application route
+app.use(cors()); // for deployment purpose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // don't forget to invoke the express.json()
 
